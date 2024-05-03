@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fatec.sigvs.model.IProdutoRepository;
 import com.fatec.sigvs.model.Produto;
+import com.fatec.sigvs.service.IProdutoRepository;
 
 @SpringBootTest
 class Req01CadastrarProduto {
@@ -20,9 +20,9 @@ class Req01CadastrarProduto {
 
 	@Test
 	void ct01_cadastrar_produto_com_sucesso() {
-		Produto produto1 = new Produto("eletrobomba 110v", "maquina de lavar", 22.30, 10);
-		Produto produto2 = new Produto("Tirante Original Brastemp E Consul De 7 A 12 Kg 11cm", "lavar louça", 3.90, 20);
-		Produto produto3 = new Produto("Termoatuador Lavadora Colormaq Electrolux GE", "maquina de lavar", 29.70, 40);
+		Produto produto1 = new Produto("eletrobomba 110v", "maquina de lavar", "22.30", "10");
+		Produto produto2 = new Produto("Tirante Original Brastemp E Consul De 7 A 12 Kg 11cm", "lavar louça", "3.90", "20");
+		Produto produto3 = new Produto("Termoatuador Lavadora Colormaq Electrolux GE", "maquina de lavar", "29.70", "40");
 		repository.saveAll(Arrays.asList(produto1, produto2, produto3));
 		assertEquals(3, repository.count());
 	}
@@ -31,10 +31,10 @@ class Req01CadastrarProduto {
 	void ct02_cadastrar_produto_descricao_invalida() {
 		Produto produto1 = null;
 		try {
-			produto1 = new Produto("", "maquina de lavar", 22.30, 10);
+			produto1 = new Produto("", "maquina de lavar", "22.30", "10");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			assertEquals("A descricao não deve estar em branco", e.getMessage());
+			assertEquals("A descrição não deve estar em branco", e.getMessage());
 			assertNull(produto1);
 		}
 	}
@@ -43,7 +43,7 @@ class Req01CadastrarProduto {
 	void ct03_cadastrar_produto_custo_invalido() {
 		Produto produto1 = null;
 		try {
-			produto1 = new Produto("eletrobomba 110v", "maquina de lavar", -1, 10);
+			produto1 = new Produto("eletrobomba 110v", "maquina de lavar", "-1", "10");
 			fail("deve falhar para custo invalido");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -56,10 +56,10 @@ class Req01CadastrarProduto {
 	void ct04_cadastrar_produto_quantidade_invalida(){
 		Produto produto1 = null;
 		try{
-			produto1 = new Produto("eletrobomba 110v", "maquina de lavar", 11, -1);
+			produto1 = new Produto("eletrobomba 110v", "maquina de lavar", "11", "-1");
 			fail("deve falhar para custo invalido");
 		} catch (Exception e){
-			assertEquals("A quantidade deve ser maior que zero", e.getMessage());
+			assertEquals("A quantidade no estoque deve ser maior que zero", e.getMessage());
 			assertNull(produto1);
 		}
 	}
@@ -68,10 +68,10 @@ class Req01CadastrarProduto {
 	void ct05_cadastrar_produto_descricao_invalida_null() {
 		Produto produto1 = null;
 		try {
-			produto1 = new Produto(null, "maquina de lavar", 22.30, 10);
+			produto1 = new Produto(null, "maquina de lavar", "22.30", "10");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			assertEquals("A descricao não deve estar em branco", e.getMessage());
+			assertEquals("A descrição não deve estar em branco", e.getMessage());
 			assertNull(produto1);
 		}
 	}
@@ -80,7 +80,7 @@ class Req01CadastrarProduto {
 	void ct06_cadastrar_catergoria_invalida_null(){
 		Produto produto1 = null;
 		try {
-			produto1 = new Produto("eletrobomba 110v", null, 22.30, 10);
+			produto1 = new Produto("eletrobomba 110v", null, "22.30", "10");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			assertEquals("A categoria não deve estar em branco", e.getMessage());
@@ -92,7 +92,7 @@ class Req01CadastrarProduto {
 	void ct07_cadastrar_catergoria_invalida_vazia(){
 		Produto produto1 = null;
 		try {
-			produto1 = new Produto("eletrobomba 110v", "", 22.30, 10);
+			produto1 = new Produto("eletrobomba 110v", "", "22.30", "10");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			assertEquals("A categoria não deve estar em branco", e.getMessage());
